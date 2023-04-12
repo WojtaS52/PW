@@ -12,7 +12,7 @@ namespace Model
     {
         private readonly ISet<IObserver<IEnumerable<KuleczkaModel>>> observers;
         private IDisposable? unsubscriber;
-        private readonly LogikaAbstractApi logika;
+        private readonly LogikaAbstractApi logika;      //checklist1
 
         public Model(LogikaAbstractApi? logika = default)
         {

@@ -12,7 +12,7 @@ namespace Logika
         public override IEnumerable<Kuleczka> Kulki => simMenager.Kulki;
 
         private readonly ISet<IObserver<IEnumerable<Kuleczka>>> obs;
-        private readonly DaneAbstractApi dane;
+        private readonly DaneAbstractApi dane;      //checklist1
         private readonly SimMenager simMenager;
 
         private bool flag = false;

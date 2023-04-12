@@ -24,7 +24,7 @@ namespace Model
 
         public bool IsValid(int val)
         {
-            return val.IsBetween(min, max);
+            return val.IsBetween(min, max);     //ch1
         }
     }
 }
