@@ -35,6 +35,12 @@ namespace Logika
             x = this.X;
             y = this.Y;
         }
+        public static float Dystans2(Vector2 p1, Vector2 p2)
+        {
+            float roznicaX = p1.X - p2.X;
+            float roznicaY = p1.Y - p2.Y;
+            return roznicaX * roznicaX + roznicaY * roznicaY;
+        }
 
 
         public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
@@ -56,5 +62,13 @@ namespace Logika
             return !(lhs == rhs);
         }
         
+        public static Vector2 operator *(Vector2 lhs, float d) 
+        {
+            return new Vector2 
+            { 
+                X = lhs.X * d,
+                Y = lhs.Y * d,
+            };
+     }
     }
 }

@@ -7,6 +7,11 @@
 
         public override int SzerokoscPlanszy { get; } = 350;
 
-        public override int SrednicaKuli { get; } = 20;
+        public override int minSrednicaKuli { get; } = 20;
+
+        public override int maxSrednicaKuli { get; } = 50;
+
+        public override float predkosc { get; } = 30f;
+
     }
 }
