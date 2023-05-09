@@ -1,4 +1,5 @@
 ﻿
+
 namespace Logika
 {
     public class Plansza

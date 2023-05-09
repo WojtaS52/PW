@@ -35,6 +35,10 @@ namespace Logika
             x = this.X;
             y = this.Y;
         }
+
+       
+
+
         public static float Dystans2(Vector2 p1, Vector2 p2)
         {
             float roznicaX = p1.X - p2.X;
@@ -51,7 +55,17 @@ namespace Logika
                 Y = lhs.Y + rhs.Y,
             };
         }
-       
+
+        public static float Dystans(Vector2 p1, Vector2 p2)
+        {
+            return MathF.Sqrt(Dystans2(p1, p2));
+        }
+
+        public static float Skalar(Vector2 p1 , Vector2 p2)
+        {
+            return p1.X * p2.X + p1.Y * p2.Y;   
+        }
+
         public static bool operator ==(Vector2 lhs, Vector2 rhs)
         {
             return lhs.Equals(rhs);

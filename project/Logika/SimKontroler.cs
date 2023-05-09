@@ -1,4 +1,4 @@
-﻿using Dane;
+﻿/*using Dane;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,4 +96,4 @@ namespace Logika
             }
         }
     }
-}
+}*/

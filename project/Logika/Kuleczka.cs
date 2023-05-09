@@ -84,7 +84,7 @@ namespace Logika
             Follow(_daneKulka);
         }
 
-        public void Follow(IObservable<InterfejsDaneKulka> provider)    //podazaj
+        public void Follow(IObservable<InterfejsDaneKulka> provider)   
         {
             _unsubscriber = provider.Subscribe(this);
         }
@@ -137,6 +137,7 @@ namespace Logika
 
                 }
             }
+
             _daneKulka?.SetPredkosc(nSzybkoscX, nSzybkoscY);    //ustawiamy prendkosc wrrrr
 
             _daneKulka?.Przesuwanie(move.X, move.Y); // tu jeszcze ew. zerknąć
