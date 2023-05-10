@@ -70,3 +70,6 @@ namespace Logika
 
     }
 }
+
+// best regards for AfterTable,
+//Wojtas
