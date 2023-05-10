@@ -125,9 +125,9 @@ namespace Logika
 
             var (GranicaYx, GranicaYy) = _plansza.GranicaY;
 
-            if (!pozX.IsBetween(GranicaYx, GranicaYy, (Srednica / 2)))
+            if (!pozY.IsBetween(GranicaYx, GranicaYy, (Srednica / 2)))
             {
-                if (pozX <= GranicaYx + (Srednica / 2))
+                if (pozY <= GranicaYx + (Srednica / 2))
                 {
                     nSzybkoscY = MathF.Abs(nSzybkoscY);
                 }
@@ -146,7 +146,7 @@ namespace Logika
 
         public bool CzyWZasiegu(InterfejsKuleczka kulka)
         {
-            int minDystans = (this.Srednica/2) + (kulka.Srednica /2) ;    //przypominam ze srednica przez 2 to promień, chyba nie wiem nie umimem matematyki
+            int minDystans = this.Srednica/2 + kulka.Srednica / 2 ;    //przypominam ze srednica przez 2 to promień, chyba nie wiem nie umimem matematyki
 
 
             float minDystans2 = minDystans * minDystans;
@@ -171,8 +171,8 @@ namespace Logika
 
         public void OnNext(InterfejsDaneKulka kulkaD)
         {
-            Pozycja = new Vector2(kulkaD.posX, kulkaD.posY);
-            Szybkosc = new Vector2(kulkaD.speedX, kulkaD.speedY);
+            Pozycja = new Vector2(kulkaD.PosX, kulkaD.PosY);
+            Szybkosc = new Vector2(kulkaD.SpeedX, kulkaD.SpeedY);
         }
 
         public IDisposable Subscribe(IObserver<InterfejsKuleczka> observer) 
@@ -219,7 +219,7 @@ namespace Logika
         public override bool Equals(object? obj)
         {
             return obj is Kuleczka kulka
-                && EqualsK(kulka);
+                && Equals(kulka);
         }
 
         public bool EqualsK(Kuleczka? kuleczka)

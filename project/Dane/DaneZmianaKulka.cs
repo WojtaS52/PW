@@ -12,7 +12,7 @@ namespace Dane
 
         public DaneZmianaKulka(InterfejsDaneKulka kulka)
         {
-            this.Kulka = kulka;
+            Kulka = kulka;
         }
     }
 }

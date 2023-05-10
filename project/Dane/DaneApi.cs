@@ -3,15 +3,15 @@
     public class DaneApi : DaneAbstractApi
     {
         //ustawiamy tutaj parametry
-        public override int WysokoscPlanszy { get; } = 200;
+        public override int WysokoscPlanszy { get; } = 244;
 
-        public override int SzerokoscPlanszy { get; } = 350;
+        public override int SzerokoscPlanszy { get; } = 477;
 
-        public override int minSrednicaKuli { get; } = 20;
+        public override int minSrednicaKuli { get; } = 16;
 
-        public override int maxSrednicaKuli { get; } = 50;
+        public override int maxSrednicaKuli { get; } = 38;
 
-        public override float predkosc { get; } = 30f;
+        public override float predkosc { get; } = 20f;
 
     }
 }

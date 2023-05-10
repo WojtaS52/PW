@@ -11,14 +11,14 @@
     </Window.DataContext>
     <Grid Margin="0,-1,0,1">
 
-        <Button Content="Start" HorizontalAlignment="Left" Margin="564,10,0,0" VerticalAlignment="Top" Height="102" Width="226" Command="{Binding thisViewModel.SimStartCommand}"/>
-        <Button Content="stop" HorizontalAlignment="Left" Margin="564,117,0,0" VerticalAlignment="Top" Height="102" Width="226" Command="{Binding thisViewModel.SimStopCommand}"/>
-        <TextBox HorizontalAlignment="Left" Margin="617,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding thisViewModel.LiczbaKulek}"/>
-        <Border BorderBrush="#B22222" BorderThickness="3" Margin="0,28,251,126" Width="356" Height="206">
-            <ItemsControl ItemsSource="{Binding thisViewModel.Kulki}" Margin="0,0,0,0">
+        <Button Content="Start" HorizontalAlignment="Left" Margin="30,318,0,0" VerticalAlignment="Top" Height="32" Width="145" Command="{Binding thisViewModel.SimStartCommand}"/>
+        <Button Content="stop" HorizontalAlignment="Left" Margin="175,318,0,0" VerticalAlignment="Top" Height="32" Width="140" Command="{Binding thisViewModel.SimStopCommand}"/>
+        <TextBox HorizontalAlignment="Left" Margin="315,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Text="{Binding thisViewModel.LiczbaKulek}" Height="32"/>
+        <Border BorderBrush="#B22222" BorderThickness="3" Margin="0,28,251,126" Width="489" Height="252">
+            <ItemsControl ItemsSource="{Binding thisViewModel.Kulki}" Margin="0,0,-3,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Name="BallSpace" Margin="0,0,0,0" Width="350" Height="200" RenderTransformOrigin="0.5,0.5">
+                        <Canvas Name="BallSpace" Margin="0,0,0,0" Width="480" Height="246" RenderTransformOrigin="0.5,0.5">
                             <Canvas.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleY="-1"/>
@@ -52,5 +52,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
+        <Label Content="Liczba kulek:" HorizontalAlignment="Left" Height="28" Margin="317,294,0,0" VerticalAlignment="Top" Width="138"/>
     </Grid>
 </Window>

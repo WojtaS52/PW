@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,17 @@ namespace ViewModel
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));//auto-generate
+        }
+
+        protected bool SetField<T>(ref T field, T value, InterfaceValidator<T> val, T def, [CallerMemberName] string propertyName = "")
+        {
+            if (val.IsInvalid(value))
+            {
+                value = def;
+            }
+
+            return SetField(ref field, value, propertyName);
+
         }
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = "")

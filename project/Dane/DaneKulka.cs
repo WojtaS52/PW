@@ -8,33 +8,33 @@ namespace Dane
 {
     public class DaneKulka : InterfejsDaneKulka
     {
-        public int srednica { get; init; }
+        public int Srednica { get; init; }
 
-        public float posX { get; private set; }
+        public float PosX { get; private set; }
 
-        public float posY { get; private set; }
+        public float PosY { get; private set; }
 
-        public float speedX { get; private set; }
+        public float SpeedX { get; private set; }
 
-        public float speedY { get; private set; }
+        public float SpeedY { get; private set; }
 
         private ISet<IObserver<InterfejsDaneKulka>> _observers; //czesciowo wygenerowane - wg visuala to sie tak robi
 
         public DaneKulka(int srednica, float posX, float posY, float speedX, float speedY)
         {
-            this.srednica = srednica;
-            this.posX = posX;
-            this.posY = posY;
-            this.speedX = speedX;
-            this.speedY = speedY;
+            Srednica = srednica;
+            PosX = posX;
+            PosY = posY;
+            SpeedX = speedX;
+            SpeedY = speedY;
 
             _observers = new HashSet<IObserver<InterfejsDaneKulka>>();
         }
 
         public async Task Przesuwanie(float przesuniecieX, float przesuniecieY)
         {
-            posX += przesuniecieX;
-            posY += przesuniecieY;
+            PosX += przesuniecieX;
+            PosY += przesuniecieY;
             SledzKulki(this);
 
             await Zapis();
@@ -46,8 +46,8 @@ namespace Dane
 
         public async Task SetPredkosc(float predkoscX, float predkoscY)
         {
-            speedX = predkoscX;
-            speedY = predkoscY;
+            SpeedX = predkoscX;
+            SpeedY = predkoscY;
             SledzKulki(this);
 
             await Zapis();

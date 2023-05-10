@@ -1,4 +1,4 @@
-﻿using Dane;
+﻿ using Dane;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace Logika
             _dane = dane ?? DaneAbstractApi.StworzDaneApi();
             _observers = new HashSet<IObserver<InterfejsKuleczka>>();
 
-            _plansza = new Plansza(_dane.WysokoscPlanszy, _dane.SzerokoscPlanszy);
+            _plansza = new Plansza( _dane.SzerokoscPlanszy, _dane.WysokoscPlanszy);
             _kulki = new List<InterfejsKuleczka>();
         }
 
@@ -43,20 +43,25 @@ namespace Logika
 
             return _kulki;
         }
-
+        
         private void ObslugaKolizji()
         {
             var kolizje = Kolizje.Get(_kulki);
             if (kolizje.Count > 0)
             {
+                
+                
                 foreach (var kolizja in kolizje)
                 {
                     var (kulka1, kulka2) = kolizja;
                     (kulka1.Szybkosc, kulka2.Szybkosc) = Kolizje.ObliczSzybkosc(kulka1, kulka2);
                 }
             }
-            Thread.Sleep(1);    //0.o
+            Thread.Sleep(1);   
         }
+        
+
+       
 
         private Vector2 GetRandomPos(int srednica)
         {
@@ -98,23 +103,10 @@ namespace Logika
             {
                 observer.OnCompleted();
             }
+            _observers.Clear();
         }
 
-        public override void Dispose()
-        {
-            KoniecTransmisji();
-            ThreadManager.Stop();
-
-            Trace.WriteLine($"Srednia delta = {ThreadManager.AverageDeltaTime}");
-            Trace.WriteLine($"Srednie Fps = {ThreadManager.AverageFps}");
-            Trace.WriteLine($"Klatki = {ThreadManager.FrameCount}");
-
-            foreach( var kulka in _kulki)
-            {
-                kulka.Dispose();
-            }
-            _kulki.Clear();
-        }
+      
 
         private class Unsubscriber : IDisposable
         {
@@ -131,6 +123,22 @@ namespace Logika
             {
                 _observers.Remove(_observer);
             }
+        }
+
+        public override void Dispose()
+        {
+            KoniecTransmisji();
+            ThreadManager.Stop();
+
+            Trace.WriteLine($"Srednia delta = {ThreadManager.AverageDeltaTime}");
+            Trace.WriteLine($"Srednie Fps = {ThreadManager.AverageFps}");
+            Trace.WriteLine($"Klatki = {ThreadManager.FrameCount}");
+
+            foreach (var kulka in _kulki)
+            {
+                kulka.Dispose();
+            }
+            _kulki.Clear();
         }
     }
 }

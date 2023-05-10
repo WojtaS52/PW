@@ -8,13 +8,13 @@ namespace Dane
 {
     public interface InterfejsDaneKulka : IObservable<InterfejsDaneKulka>
     {
-        int srednica { get; init; }
+        int Srednica { get; init; }
 
-        float posX { get; }
-        float posY { get; }
+        float PosX { get; }
+        float PosY { get; }
 
-        float speedX { get; }//zamiast predkosc speed zeby nam sie nie pomylilo
-        float speedY { get; }
+        float SpeedX { get; }//zamiast predkosc speed zeby nam sie nie pomylilo
+        float SpeedY { get; }
 
         Task SetPredkosc(float predkoscX, float predkoscY); // "Jestem predkoscia PART2" ~ Maj 2023, WŚ MR
         Task Przesuwanie(float przesuniecieX, float przesuniecieY);
