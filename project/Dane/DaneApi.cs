@@ -1,4 +1,6 @@
-﻿namespace Dane
+﻿using Dane.API;
+
+namespace Dane
 {
     public class DaneApi : DaneAbstractApi
     {
