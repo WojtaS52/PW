@@ -1,4 +1,4 @@
-﻿using Dane;
+﻿/*using Dane;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,4 +16,4 @@ namespace Logika
         void Poruszanie(float s);
         bool CzyWZasiegu(InterfejsKuleczka kulka);  
     }
-}
+}*/

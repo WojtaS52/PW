@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
 using Dane.API;
+using Logika.API;
 
 namespace Logika
 {

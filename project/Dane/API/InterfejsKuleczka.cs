@@ -8,7 +8,7 @@ namespace Dane.API
 {
     public interface InterfejsKuleczka : IObservable<InterfejsKuleczka>, IDisposable
     {
-        public int Srednica { get;}
+        int Srednica { get;}
         public Vector2 Szybkosc { get; set; }
         public Vector2 Pozycja { get; }
 
