@@ -16,6 +16,31 @@ namespace Dane.Logi
             "kuleczki_mr_ws",
             "project-collisons");
 
+        public static void DirIsValid(bool writePath = false)
+        {
+            if (!Directory.Exists(BaseDataDirPath))
+            {
+                Directory.CreateDirectory(BaseDataDirPath);
+            }
+            //try - catch do uprawnien zapisu
+            try
+            {
+                using var fs = File.Create(
+                    Path.Combine(BaseDataDirPath, Path.GetRandomFileName()),
+                    1,
+                    FileOptions.DeleteOnClose);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Bazowy dokument zapisu logów nie posiada uprawnien do zapisu!!! error!!!!", e);
+            }
 
+            if (writePath) Console.WriteLine($"Dane sciezka = {BaseDataDirPath}");
+        }
+
+        public static void UsunKatalog()
+        {
+            //tutaj dodac usuwanie katalogu
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Dane.Logi
 
         public readonly LogSetting Setting;
 
-        public LogAccess(string timeStamp, int lineNumber, string message, LogSetting setting)
+        public LogAccess(LogSetting setting, string message, int lineNumber)
         {
             TimeStamp = DateTime.Now.ToString("dd-MM-yyyy - HH:mm:ss:fff");     //fff - milisekundy(1/1000, bo w sumie nie wiem czy to to samo) w takim programies twierdzilismy ze chyba przyda sie do logów bo raczej sekunda to za bardzo ogolny czas ale nie wiem jestem studentem ; dobra skoncz ten referat
             LineNumber = lineNumber;

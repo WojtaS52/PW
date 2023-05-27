@@ -1,4 +1,5 @@
 ﻿using Logika;
+using Logika.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Model
-{   
+{
     internal class ApiModel : ModelAbstractApi
     {
         private readonly LogikaAbstractApi _logika;

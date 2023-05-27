@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logika
+namespace Logika.API
 {
     public abstract class LogikaAbstractApi : IObservable<InterfejsKuleczka>
     {

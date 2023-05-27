@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dane.Logi
+namespace Logika
 {
-    public interface InterfejsLogWriter : IDisposable
+    internal class KuleczkaLogika
     {
-        void Write(IEnumerable<LogAccess> logAccesses);
-
     }
 }
