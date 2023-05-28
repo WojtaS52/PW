@@ -20,8 +20,8 @@ namespace Dane.Logi
         {
             Global.DirIsValid();
 
-            if(String.IsNullOrWhiteSpace(nazwaPliku)) nazwaPliku = $"kolizje:({DateTime.Now:'d'yyyy-MM-dd'T'HH-mm-ss}).log";
-
+            if(String.IsNullOrWhiteSpace(nazwaPliku)) nazwaPliku = $"kolizje({DateTime.Now:yyyy-MM-dd' 'HH-mm-ss}).log";
+            //$"Kolizje({DateTime.Now:'D'yyyy-MM-dd'T'HH-mm-ss}).log"
             _logPlikSciezka = Path.Combine(Global.BaseDataDirPath, nazwaPliku);
         }
 
