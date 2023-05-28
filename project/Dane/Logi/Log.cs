@@ -49,7 +49,7 @@ namespace Dane.Logi
         private void Start()
         {
             if (_logging) return;
-
+            _logging = true;
             _zapisAction = Task.Run(WriteLoop);
         }
 

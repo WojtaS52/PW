@@ -8,10 +8,6 @@ namespace Dane
 {
     public static class Extension
     {
-        public static bool IsBetween(this int val, int min, int max)
-        {
-            return val >= min && val <= max;
-        }
 
         public static bool IsBetween(this float val, float min, float max, float pad = 0f)
         {
@@ -21,6 +17,12 @@ namespace Dane
             }
 
             return (val - pad >= min) && (val + pad <= max);
+        }
+
+
+        public static bool IsBetween(this int val, int min, int max)
+        {
+            return val >= min && val <= max;
         }
 
         //Zacisk nasz

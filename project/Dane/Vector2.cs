@@ -155,5 +155,11 @@ namespace Dane
                 Y =  d/lhs.Y,
             };
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Vector2 vector
+                && Equals(vector);
+        }
     }
 }

@@ -32,11 +32,12 @@ namespace Logika
 
         public override IEnumerable<InterfejsKuleczka> StworzKuleczki(int count)
         {
-           for(int i = 0; i < count; i++)
+           for(var i = 0; i < count; i++)
             {
                 int srednica = GetRandomSrednica();
-                Vector2 szybkosc = GetRandomSzybkosc();
                 Vector2 poz = GetRandomPos(srednica);
+                Vector2 szybkosc = GetRandomSzybkosc();
+                
                 var nowaKulka = new Kuleczka(srednica, szybkosc, poz);
 
                 _kulki.Add(nowaKulka);

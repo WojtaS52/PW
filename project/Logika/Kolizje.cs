@@ -24,13 +24,12 @@ namespace Dane
             foreach ( var kulka in kulki)
             {
                 var (pozX, pozY) = kulka.Pozycja;
-                int promien = kulka.Srednica / 2;
 
-                if(!pozX.IsBetween(granicaXx,granicaXy,promien))
+                if(!pozX.IsBetween(granicaXx,granicaXy,(kulka.Srednica / 2)))
                 {
                     kolizjePlansza.Add((kulka, plansza.GranicaX, CollisionAxis.X));
                 }
-                if (!pozY.IsBetween(granicaYx, granicaYy, promien))
+                if (!pozY.IsBetween(granicaYx, granicaYy, (kulka.Srednica / 2)))
                 {
                     kolizjePlansza.Add((kulka, plansza.GranicaY, CollisionAxis.Y));
                 }

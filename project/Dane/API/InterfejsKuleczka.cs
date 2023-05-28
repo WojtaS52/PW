@@ -9,8 +9,8 @@ namespace Dane.API
     public interface InterfejsKuleczka : IObservable<InterfejsKuleczka>, IDisposable
     {
         int Srednica { get;}
-        public Vector2 Szybkosc { get; set; }
-        public Vector2 Pozycja { get; }
+        Vector2 Szybkosc { get; set; }
+        Vector2 Pozycja { get; }
 
         void Poruszanie(float s);
         bool CzyWZasiegu(InterfejsKuleczka kulka);  
