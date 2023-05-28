@@ -14,7 +14,7 @@ namespace Dane.Logi
             Environment.SpecialFolder.MyDocuments
             ),
             "kuleczki_mr_ws",
-            "celll");
+            "folder_z_kolizjami");
 
         public static void DirIsValid(bool writePath = false)
         {
