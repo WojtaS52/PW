@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Dane.API
+namespace Dane
 //refaactor kuleczka - wtorek start 
 {
     public class Kuleczka : InterfejsKuleczka, IEquatable<Kuleczka>
@@ -18,11 +18,11 @@ namespace Dane.API
 
         public int Srednica { get; init; }
 
-        public Vector2 Szybkosc 
+        public Vector2 Szybkosc
         {
             get
             {
-                lock (szybkoscLock) 
+                lock (szybkoscLock)
                 {
                     return _szybkosc;
                 }
@@ -49,7 +49,7 @@ namespace Dane.API
             {
                 lock (pozycjaLock)
                 {
-                    if(_pozycja == value)
+                    if (_pozycja == value)
                     {
                         return;
                     }
@@ -75,20 +75,20 @@ namespace Dane.API
 
             _observers = new HashSet<IObserver<InterfejsKuleczka>>();
             _disposer = ThreadManager.Add<float>(Poruszanie);
-        }       
+        }
         //zrobilismy tzw unfollow followa
 
         //stop na rfactor poruszania
         // REFACTOR PORUSZANIA + follow powyżej;
-        public void Poruszanie(float delta) 
+        public void Poruszanie(float delta)
         {
-            if (Szybkosc.CzyZero())    
+            if (Szybkosc.CzyZero())
             {
                 return;
-            }  
+            }
 
-             // tu jeszcze ew. zerknąć
-            
+            // tu jeszcze ew. zerknąć
+
             float sila = delta.Clamp(0f, 100f) * 0.01f;
 
             //Pozycja += Szybkosc;// Jestem predkosciom ~ Wojtas 7.4.2023
@@ -99,7 +99,7 @@ namespace Dane.API
         // tu dobrze (chyba)
         public bool CzyWZasiegu(InterfejsKuleczka kulka)
         {
-            int minDystans = this.Srednica/2 + kulka.Srednica / 2 ;    //przypominam ze srednica przez 2 to promień, chyba nie wiem nie umimem matematyki
+            int minDystans = this.Srednica / 2 + kulka.Srednica / 2;    //przypominam ze srednica przez 2 to promień, chyba nie wiem nie umimem matematyki
 
             float minDystans2 = minDystans * minDystans;
             float aktualnyDystans2 = Vector2.Dystans2(this.Pozycja, kulka.Pozycja);
@@ -108,8 +108,8 @@ namespace Dane.API
         }
 
         //inaczej visual drze ryja na mnie :<
-    
-        public IDisposable Subscribe(IObserver<InterfejsKuleczka> observer) 
+
+        public IDisposable Subscribe(IObserver<InterfejsKuleczka> observer)
         {
             _observers.Add(observer);
             return new Unsubscriber(_observers, observer);
@@ -121,7 +121,7 @@ namespace Dane.API
             {
                 return;
             }
-            foreach(var observer in _observers)
+            foreach (var observer in _observers)
             {
                 observer.OnNext(kulka);
             }
@@ -142,7 +142,7 @@ namespace Dane.API
             {
                 _observers.Remove(_observer);
             }
-        }     
+        }
 
         public override bool Equals(object? obj)
         {
@@ -151,7 +151,7 @@ namespace Dane.API
         }
 
         //wymagane do interfejsu equatable
-        public bool EqualsK(Kuleczka? kuleczka)
+        public bool Equals(Kuleczka? kuleczka)
         {
             return kuleczka is not null
                 && Srednica == kuleczka.Srednica

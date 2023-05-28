@@ -1,9 +1,9 @@
 ﻿using Logika;
 using Logika.API;
+using Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +13,7 @@ namespace Model
     {
         private readonly LogikaAbstractApi _logika;
         private readonly ISet<IObserver<InterfejsKuleczkaModel>> _observers;
-        private readonly IDictionary<InterfejsKuleczka, InterfejsKuleczkaModel> _kulkaDoModelu;
+        private readonly IDictionary<InterfejsKuleczkaLogika, InterfejsKuleczkaModel> _kulkaDoModelu;
 
         private IDisposable? _unsubscriber;
 
@@ -21,7 +21,7 @@ namespace Model
         {
             _logika = logika ?? LogikaAbstractApi.StworzLogikaApi();
             _observers = new HashSet<IObserver<InterfejsKuleczkaModel>>();
-            _kulkaDoModelu = new Dictionary<InterfejsKuleczka, InterfejsKuleczkaModel>(); 
+            _kulkaDoModelu = new Dictionary<InterfejsKuleczkaLogika, InterfejsKuleczkaModel>(); 
         }
 
         public override void Start(int liczbaKulek)
@@ -30,12 +30,7 @@ namespace Model
             _logika.StworzKuleczki(liczbaKulek);
         }
 
-        public override void Stop()
-        {
-            _logika.Dispose();
-        }
-
-        public void Follow(IObservable<InterfejsKuleczka> provider)
+        public void Follow(IObservable<InterfejsKuleczkaLogika> provider)
         {
             _unsubscriber = provider.Subscribe(this);
         }
@@ -45,8 +40,8 @@ namespace Model
             _unsubscriber?.Dispose();
             KoniecTransmisji();
         }
-
-        public override void OnNext(InterfejsKuleczka kulka)
+        //juz sam visual proponuje jak zrefactorowac XDDD
+        public override void OnNext(InterfejsKuleczkaLogika kulka)
         {
             _kulkaDoModelu.TryGetValue(kulka, out var kuleczkaModel);
             if(kuleczkaModel == null)
@@ -95,6 +90,12 @@ namespace Model
             {
                 _observers.Remove(_observer);
             }
+        }
+
+        public override void Dispose()
+        {
+            _logika.Dispose();
+            _unsubscriber?.Dispose();
         }
     }
 }

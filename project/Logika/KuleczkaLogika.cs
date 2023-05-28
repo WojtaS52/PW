@@ -85,7 +85,7 @@ namespace Logika
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-            private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

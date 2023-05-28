@@ -1,4 +1,5 @@
 ﻿using Logika;
+using Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace Model
             this.max = max;
         }
 
-        public ValidatorKulek() : this(Int32.MinValue) { }
+        public ValidatorKulek() : this(int.MinValue) { }
 
-        public ValidatorKulek(int min) : this(min, Int32.MaxValue) { }
+        public ValidatorKulek(int min) : this(min, int.MaxValue) { }
 
         public bool IsValid(int val)
         {
-            return val.IsBetween(min, max);     //ch1
+            return val >= min && val <= max;
         }
 
         public bool IsInvalid(int val)

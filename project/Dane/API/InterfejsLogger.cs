@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Dane.API
 {
-    public interface InterfejsLogger
+    public interface InterfejsLogger : IDisposable
     {
         public void LogInfo(string msg, [CallerLineNumber] int lineNumber = -1);
         public void LogWarning(string msg, [CallerLineNumber] int lineNumber = -1);

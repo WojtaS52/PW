@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using Model.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

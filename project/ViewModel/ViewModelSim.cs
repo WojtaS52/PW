@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.API;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -8,9 +9,9 @@ namespace ViewModel
 {
     public class ViewModelSim : ViewModelBase, IObserver<InterfejsKuleczkaModel>
     {
-        private readonly ModelAbstractApi _model;
-        private readonly InterfaceValidator<int> validator;
-
+        
+        private readonly InterfaceValidator<int> validator;//ok
+        private ModelAbstractApi? _model;//ok
         private IDisposable? unsubscriber;
 
         private int liczbaKulek = 5;
@@ -30,10 +31,9 @@ namespace ViewModel
         public ICommand SimStartCommand { get; init; }
         public ICommand SimStopCommand { get; init; }
 
-        public ViewModelSim(ModelAbstractApi? model = default, InterfaceValidator<int>? validatorKulek = default)
+        public ViewModelSim(InterfaceValidator<int>? validatorKulek = default)
             : base()
         {
-            _model = model ?? ModelAbstractApi.StworzModelApi();
             validator = validatorKulek ?? new ValidatorKulek();
 
             SimStartCommand = new SimStartCommand(this);
@@ -42,6 +42,7 @@ namespace ViewModel
 
         public void SimStart()
         {
+            _model = ModelAbstractApi.StworzModelApi();
             getSetFlag = true;
             Follow(_model);
             _model.Start(liczbaKulek);
@@ -51,7 +52,7 @@ namespace ViewModel
         {
             getSetFlag = false;
             Kulki.Clear();
-            _model.Stop();
+            _model?.Dispose();
         }
         //wymagane przez visual
         public void OnCompleted()

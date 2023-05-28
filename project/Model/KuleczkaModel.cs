@@ -1,4 +1,5 @@
-﻿using Logika;
+﻿using Logika.API;
+using Model.API;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -9,28 +10,27 @@ namespace Model
     public class KuleczkaModel : InterfejsKuleczkaModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly InterfejsKuleczka _kulka;
+        public int Srednica => _kulka.Srednica;
+        public float PozycjaX => _kulka.Pozycja.X - (Srednica / 2);
+        public float PozycjaY => _kulka.Pozycja.Y - (Srednica / 2);
+        public float SzybkoscX => _kulka.Szybkosc.X;       //I am speeeeeeed
+        public float SzybkoscY => _kulka.Szybkosc.Y;        //Jak zygzak mqqueen tutaj leceeee
 
-        public KuleczkaModel(InterfejsKuleczka kulka)
+        private readonly InterfejsKuleczkaLogika _kulka;
+
+        private IDisposable? _unsubscriber;// added to Follow
+
+
+        public KuleczkaModel(InterfejsKuleczkaLogika kulka)
         {
             _kulka = kulka;
             Follow(_kulka);
         }
-        
-        public int Srednica => _kulka.Srednica;
-        public Vector2 Pozycja => ObliczaniePrzesunieciaPozycji(_kulka.Pozycja);
-        public Vector2 Szybkosc => _kulka.Szybkosc;
 
-        private Vector2 ObliczaniePrzesunieciaPozycji(Vector2 pozycja)
-        {
-            return new Vector2(pozycja.X - (Srednica/2), pozycja.Y - (Srednica / 2));
-        }
-
-        public void Follow(IObservable<InterfejsKuleczka> provider)
+        public void Follow(IObservable<InterfejsKuleczkaLogika> provider)
         {
             _unsubscriber = provider.Subscribe(this);
         }
-        private IDisposable? _unsubscriber;     // added to Follow
         public void OnError(Exception error)
         {
             throw error;
@@ -41,9 +41,10 @@ namespace Model
             _unsubscriber?.Dispose();
         }
 
-        public void OnNext(InterfejsKuleczka kulka)
+        public void OnNext(InterfejsKuleczkaLogika kulka)
         {
-            OnPropertyChanged(nameof(Pozycja));
+            OnPropertyChanged(nameof(PozycjaX));
+            OnPropertyChanged(nameof(PozycjaY));
         }
 
 
@@ -51,5 +52,6 @@ namespace Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

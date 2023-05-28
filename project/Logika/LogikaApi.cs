@@ -6,23 +6,26 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
 using Dane.API;
+using Dane.Logi;
 using Logika.API;
+using Dane;
+
 
 namespace Logika
 {
     internal class LogikaApi : LogikaAbstractApi
     {
         private readonly IList<InterfejsKuleczka> _kulki;
-        private readonly ISet<IObserver<InterfejsKuleczka>> _observers;
+        private readonly ISet<IObserver<InterfejsKuleczkaLogika>> _observers;
         private readonly DaneAbstractApi _dane;
         private readonly Plansza _plansza;
         private readonly Random _random = new();
-
-        public LogikaApi(DaneAbstractApi? dane = default)
+        private readonly InterfejsLogger _logger;
+        public LogikaApi(DaneAbstractApi? dane = default,InterfejsLogger? logger = default)
         {
             _dane = dane ?? DaneAbstractApi.StworzDaneApi();
-            _observers = new HashSet<IObserver<InterfejsKuleczka>>();
-
+            _observers = new HashSet<IObserver<InterfejsKuleczkaLogika>>();
+            _logger = logger ?? new Log();
             _plansza = new Plansza( _dane.SzerokoscPlanszy, _dane.WysokoscPlanszy);
             _kulki = new List<InterfejsKuleczka>();
         }
@@ -34,10 +37,10 @@ namespace Logika
                 int srednica = GetRandomSrednica();
                 Vector2 szybkosc = GetRandomSzybkosc();
                 Vector2 poz = GetRandomPos(srednica);
-                Kuleczka nowaKulka = new(srednica, szybkosc, poz, _plansza);
+                var nowaKulka = new Kuleczka(srednica, szybkosc, poz);
 
                 _kulki.Add(nowaKulka);
-                SledzKule(nowaKulka);
+                SledzKule(new KuleczkaLogika(nowaKulka));
             }
             ThreadManager.SetValidator(ObslugaKolizji);
             ThreadManager.Start();
@@ -47,28 +50,28 @@ namespace Logika
         
         private void ObslugaKolizji()
         {
-            var kolizje = Kolizje.Get(_kulki);
-            if (kolizje.Count > 0)
+            foreach(var (kulka1, kulka2) in Kolizje.GetKolizjeKule(_kulki))
             {
-                
-                
-                foreach (var kolizja in kolizje)
+                (kulka1.Szybkosc, kulka2.Szybkosc, var zmianaSzybkosci) = Kolizje.ObliczSzybkosc(kulka1, kulka2);
+                if (zmianaSzybkosci)
                 {
-                    var (kulka1, kulka2) = kolizja;
-                    (kulka1.Szybkosc, kulka2.Szybkosc) = Kolizje.ObliczSzybkosc(kulka1, kulka2);
+                   _logger.LogInfo($"Wykryto kolizjke kulek !!! 1# {kulka1}; 2# {kulka2}");
                 }
+                
             }
-            Thread.Sleep(1);   
+
+            foreach(var (kulka, granica, collisionAxis) in Kolizje.GetKolizjePlansza(_kulki, _plansza))
+            {
+                kulka.Szybkosc = Kolizje.ObliczSpeed(kulka, granica, collisionAxis);
+                _logger.LogInfo($"Wykryto kolizje kulki z granicą naszej planszy!!! A o to cwaniara co chciala uciec: {kulka}");
+            }
         }
         
-
-       
-
         private Vector2 GetRandomPos(int srednica)
         {
             int promien = (srednica / 2);
-            int x = _random.Next((srednica / 2), _plansza.Szerokosc - (srednica / 2));
-            int y = _random.Next((srednica / 2), _plansza.Wysokosc - (srednica / 2));
+            int x = _random.Next(promien, _plansza.Szerokosc - promien);
+            int y = _random.Next(promien, _plansza.Wysokosc - promien);
             return new Vector2(x, y);
         }
 
@@ -84,13 +87,13 @@ namespace Logika
             return _random.Next(_dane.minSrednicaKuli, _dane.maxSrednicaKuli + 1);
         }
         //clasiccly generated...
-        public override IDisposable Subscribe(IObserver<InterfejsKuleczka> observer)
+        public override IDisposable Subscribe(IObserver<InterfejsKuleczkaLogika> observer)
         {
             _observers.Add(observer);
             return new Unsubscriber(_observers, observer);
         }
 
-        private void SledzKule(InterfejsKuleczka kulka)
+        private void SledzKule(InterfejsKuleczkaLogika kulka)
         {
             foreach(var observer in _observers)
             {
@@ -111,10 +114,10 @@ namespace Logika
 
         private class Unsubscriber : IDisposable
         {
-            private readonly ISet<IObserver<InterfejsKuleczka>> _observers;
-            private readonly IObserver<InterfejsKuleczka> _observer;
+            private readonly ISet<IObserver<InterfejsKuleczkaLogika>> _observers;
+            private readonly IObserver<InterfejsKuleczkaLogika> _observer;
 
-            public Unsubscriber(ISet<IObserver<InterfejsKuleczka>> observers, IObserver<InterfejsKuleczka> observer)
+            public Unsubscriber(ISet<IObserver<InterfejsKuleczkaLogika>> observers, IObserver<InterfejsKuleczkaLogika> observer)
             {
                 _observers = observers;
                 _observer = observer;
@@ -132,14 +135,18 @@ namespace Logika
             ThreadManager.Stop();
 
             Trace.WriteLine($"Srednia delta = {ThreadManager.AverageDeltaTime}");
-            Trace.WriteLine($"Srednie Fps = {ThreadManager.AverageFps}");
+            _logger.LogInfo($"Srednia delta = {ThreadManager.AverageDeltaTime}");
+            Trace.WriteLine($"Srednie Fps'y = {ThreadManager.AverageFps}");
+            _logger.LogInfo($"Srednie Fps'y = {ThreadManager.AverageFps}");
             Trace.WriteLine($"Klatki = {ThreadManager.FrameCount}");
+            _logger.LogInfo($"Klatki = {ThreadManager.FrameCount}");
 
             foreach (var kulka in _kulki)
             {
                 kulka.Dispose();
             }
             _kulki.Clear();
+            _logger.Dispose();
         }
     }
 }

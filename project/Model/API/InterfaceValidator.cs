@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Model.API
 {
     public interface InterfaceValidator<T>
     {
-        bool IsValid (T value);
-        bool IsInvalid (T value);
+        bool IsValid(T value);
+        bool IsInvalid(T value);
     }
 }

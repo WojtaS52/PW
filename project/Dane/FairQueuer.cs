@@ -10,6 +10,7 @@ namespace Dane
 {
     public class FairQueuer
     {
+
         public double AverageDelta => _executionTimer.Elapsed.TotalMilliseconds / _frames;
         public double AverageFps => _frames / _executionTimer.Elapsed.TotalSeconds;
         public ulong FrameCount => _frames;
