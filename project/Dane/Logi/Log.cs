@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
+using System.Threading;
 
 namespace Dane.Logi
 {
@@ -20,13 +21,11 @@ namespace Dane.Logi
         private readonly ConcurrentQueue<LogAccess> _logQueue = new();
         private readonly List<LogAccess> logAccesses = new();
 
-        private Task? _zapisAction;
         private bool _logging;
 
         public Log(string fileName = "")
        : this(new LogWriter(fileName))
         { }
-
         public Log(InterfejsLogWriter logWriter)
         {
             _logZapis = logWriter;
@@ -50,23 +49,23 @@ namespace Dane.Logi
         {
             if (_logging) return;
             _logging = true;
-            _zapisAction = Task.Run(WriteLoop);
+            Timer atime = new Timer(new TimerCallback(WriteLoop),null,0,2000);      // timer nasz po dlugich zmaganiach i walce
         }
 
         private void Stop()
         {
             _logging = false;
 
-            _zapisAction?.Wait();
             ZapisLogi();
         }
-        private async void WriteLoop()
+
+        // writeloop
+        private async void WriteLoop(object o)
         {
-            while (!_logging)
+            if (!_logging)
             {
                 try
                 {
-                    await Task.Delay(50);
                     ZapisLogi();
                 }
                 catch (Exception ex)
@@ -95,7 +94,7 @@ namespace Dane.Logi
 
             Stop();
             _logZapis.Dispose();
-            _zapisAction?.Dispose();
+            
         }
     }
 }
